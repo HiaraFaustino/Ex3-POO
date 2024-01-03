@@ -1,5 +1,3 @@
-XDES02 – Programação Orientada a Objetos
-Trabalho 03
 Sua república está precisando de uma empregada doméstica e você ficou encarregado
 de fazer um programa para calcular qual tipo de doméstica seria mais vantajoso para a
 república.
