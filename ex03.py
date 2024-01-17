@@ -4,7 +4,7 @@ class EmpDomestica(ABC):
     def __init__(self, nome, telefone):
         self.__nome = nome
         self.__telefone = telefone
-
+    
     @property
     def nome(self):
         return self.__nome
@@ -17,95 +17,73 @@ class EmpDomestica(ABC):
     def calculaSalario(self):
         pass
 
+    @staticmethod
+    def menorSal(empregada):
+        menorSal = float('inf')
+        empMenorSal = None
+        for emp in empregada:
+            sal = emp.calculaSalario()
+            if sal < menorSal:
+                menorSal = sal
+                empMenorSal = emp
+        return empMenorSal
+
 class Horista(EmpDomestica):
-    def __init__(self, nome, telefone, horasTrabalhadas, valorHora):
+    def __init__(self, nome, telefone, horasTrab, valorHora):
         super().__init__(nome, telefone)
-        self.__horasTrabalhadas = horasTrabalhadas
+        self.__horasTrab = horasTrab
         self.__valorHora = valorHora
 
     @property
-    def horasTrabalhadas(self):
-        return self.__horasTrabalhadas
+    def horasTrab(self):
+        return self.__horasTrab
     
-    @property
+    @property 
     def valorHora(self):
         return self.__valorHora
     
-    @horasTrabalhadas.setter
-    def horasThabalhadas(self, horasTrabalhadas):
-        self.horasTrabalhadas = horasTrabalhadas
-
-    @valorHora.setter
-    def valorHora(self, valorHora):
-        self.__valorHora = valorHora
-
     def calculaSalario(self):
-        salMensal = self.__horasTrabalhadas * self.__valorHora
+        salMensal = self.__horasTrab * self.__valorHora
         return salMensal
     
 class Diarista(EmpDomestica):
-    def __init__(self, nome, telefone, diasTrabalhados, valorDia):
+    def __init__(self, nome, telefone, diasTrab, valorDia):
         super().__init__(nome, telefone)
-        self.__diasTrabalhados = diasTrabalhados
+        self.__diasTrab = diasTrab
         self.__valorDia = valorDia
 
     @property
-    def diasTrabalhados(self):
-        return self.__diasTrabalhados
+    def diasTrab(self):
+        return self.__diasTrab
     
     @property
     def valorDia(self):
         return self.__valorDia
     
-    @diasTrabalhados.setter
-    def diasTrabalhados(self, diasTrabalhados):
-        self.diasTrabalhados = diasTrabalhados
-
-    @valorDia.setter
-    def valorDia(self, valorDia):
-        self.valorDia = valorDia
-
     def calculaSalario(self):
-        salMensal = self.__diasTrabalhados * self.__valorDia
+        salMensal = self.__diasTrab * self.__valorDia
         return salMensal
     
 class Mensalista(EmpDomestica):
-    def __init__(self, nome, telefone, salario):
+    def __init__(self, nome, telefone, valorMensal):
         super().__init__(nome, telefone)
-        self.__salario = salario
+        self.__valorMensal = valorMensal
 
     @property
-    def salario(self):
-        return self.__salario
+    def valorMensal(self):
+        return self.__valorMensal
     
-    @salario.setter
-    def salario(self, salario):
-        self.salario = salario
-
     def calculaSalario(self):
-        return self.salario
-
-def empMenorSalario(empregadas):
-    menor_salario = float('inf') #variávem inicializada com valor infinito
-    emp_menor_salario = None
-
-    for emp in empregadas: #emp representa cada empregada da lista empregadas
-        salario = emp.calculaSalario() #chamado para calcular o salário da empregada atual (emp)
-        if salario < menor_salario:
-            menor_salario = salario
-            emp_menor_salario = emp
-
-    return emp_menor_salario
-
-if __name__=="__main__":
-    emp1 = Horista('Maria', 995623547, 160, 12)
-    emp2 = Diarista('Joana', 997458263, 20, 65)
-    emp3 = Mensalista('Márcia', 995412587, 1200)
-    empregadas = [emp1, emp2, emp3]
-    for emp in empregadas:
+        salMensal = self.__valorMensal
+        return salMensal
+    
+if __name__ == "__main__":
+    emp1 = Horista("Ana Cláudia", 997582634, 160, 12)
+    emp2 = Diarista("Márcia", 995871452, 20, 65)
+    emp3 = Mensalista("Lúcia", 987491549, 1200)
+    empregada = [emp1, emp2, emp3]
+    for emp in empregada:
         print(f'Nome: {emp.nome} - Telefone: {emp.telefone} - Salário Mensal: {emp.calculaSalario()}')
-
-    print('Opção mais barata para a república:')
-    emp_menor_salario = empMenorSalario(empregadas)#chama a função que retorna a de menor salário
-    print(f'Nome: {emp_menor_salario.nome} - Telefone: {emp_menor_salario.telefone} - Salário: {emp_menor_salario.calculaSalario()}')
+    empMenorSal = EmpDomestica.menorSal(empregada)
+    print(f'Menor salário:\nNome: {empMenorSal.nome} - Telefone: {empMenorSal.telefone} - Salário Mensal: {empMenorSal.calculaSalario()}')
   
